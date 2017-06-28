@@ -28,7 +28,18 @@ require.config({
         'login.sso': 'lib/login.sso',
         'stateful.models': 'lib/StatefulModels',
         'PulsAPI': 'lib/PulsAPI',
-        'headerParser': 'lib/headerParser'
+        'headerParser': 'lib/headerParser',
+        // RequireJS plugins
+        'text': 'vendor/require-extensions/text',
+        'async': 'vendor/require-extensions/async',
+        'font': 'vendor/require-extensions/font',
+        'goog': 'vendor/require-extensions/goog',
+        'image': 'vendor/require-extensions/image',
+        'json': 'vendor/require-extensions/json',
+        'noext': 'vendor/require-extensions/noext',
+        'mdown': 'vendor/require-extensions/mdown',
+        'propertyParser': 'vendor/require-extensions/propertyParser',
+        'markdownConverter': 'vendor/require-extensions/Markdown.Converter'
     },
     // "Paths configurations should only be used for folders, not modules themselves.
     // Map configurations apply to individual modules." See
