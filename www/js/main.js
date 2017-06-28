@@ -3,6 +3,7 @@ require.config({
     baseUrl: 'js',
     //waitSeconds: 10,
     paths: {
+        // Frameworks
     	'templates': '../templates',
     	'controllers': 'controllers',
     	'jquery': 'vendor/jquery',
@@ -16,18 +17,19 @@ require.config({
         'cache': 'vendor/backbone.fetch-cache',
         'geojson': 'lib/GeoJSON',
         'moment': 'vendor/moment-with-locales',
-        'utils': 'lib/utils',
         'view.utils': 'lib/view.utils',
-		'date': 'vendor/date',
-		'LocalStore': 'lib/ls-store',
+        'date': 'vendor/date',
+        'LocalStore': 'lib/ls-store',
         'fastclick': 'vendor/fastclick.min',
         'hammerjs': 'vendor/hammer',
         'uri': 'vendor/src',
+        // Our own libraries
+        'PulsAPI': 'lib/PulsAPI',
+        'utils': 'lib/utils',
         'history': 'lib/history',
         'moodle.download': 'lib/moodle.download',
         'login.sso': 'lib/login.sso',
         'stateful.models': 'lib/StatefulModels',
-        'PulsAPI': 'lib/PulsAPI',
         'headerParser': 'lib/headerParser',
         // RequireJS plugins
         'text': 'vendor/require-extensions/text',
