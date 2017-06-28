@@ -1,0 +1,26 @@
+{
+  "loggedin": {
+    "id": "https://brindlewaye.com/xAPITerms/verbs/loggedin/",
+    "display": {
+      "en-US": "logged in to"
+    }
+  },
+  "used": {
+    "id": "http://activitystrea.ms/schema/1.0/use",
+    "display": {
+      "en-US": "used"
+    }
+  },
+  "wasat": {
+    "id": "http://activitystrea.ms/schema/1.0/at",
+    "display": {
+      "en-US": "was at"
+    }
+  },
+  "attended": {
+    "id": "http://adlnet.gov/expapi/verbs/attended",
+    "display": {
+      "en-US": "attended"
+    }
+  }
+}
