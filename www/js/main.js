@@ -55,7 +55,13 @@ require.config({
             'i18next': 'vendor/i18next',
             'i18next-xhr-backend': 'vendor/i18nextXHRBackend.min',
             'suncalc': 'vendor/suncalc',
-            'i18next-client': 'vendor/i18next.amd'
+            'i18next-client': 'vendor/i18next.amd',
+            // Context implementation
+            'contactJS': 'vendor/contactJS/contactJS',
+            'AdaptationEngine': 'vendor/contactJS/AdaptationEngine',
+            'MathUuid': 'vendor/contactJS/MathUuid',
+            'widgets': 'pmodules/context/widgets/widgets',
+            'interpreters': 'pmodules/context/interpreters/interpreters',
         }
     }
 });
