@@ -62,6 +62,8 @@ require.config({
             'MathUuid': 'vendor/contactJS/MathUuid',
             'widgets': 'pmodules/context/widgets/widgets',
             'interpreters': 'pmodules/context/interpreters/interpreters',
+            // xAPI
+            'ADL': 'vendor/xapiwrapper.min'
         }
     }
 });
