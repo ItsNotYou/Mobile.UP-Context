@@ -31,7 +31,7 @@ define([
             var begin = moment(nowRaw).add(5, 'minutes');
             var end = moment(nowRaw).subtract(5, 'minutes');
 
-            var courses = _.chain(attendedCourses)
+            result = _.chain(attendedCourses)
                 .map(function(model) { return new calendar.Course(model, {parse: true}); })
                 .map(function(course) {
                     return _.map(course.getEvents(), function(event) {
@@ -43,14 +43,15 @@ define([
                 })
                 .flatten()
                 .filter(function(ce) {
+                    return ce.course.getStarting().isBefore(begin) && ce.course.getEnding().isAfter(end);
+                })
+                .filter(function(ce) {
                     var courseStarting = ce.course.getStarting();
                     var event = ce.event;
-                    var isCurrent = event.isOnDay(begin, courseStarting) || event.isOnDay(end, courseStarting);
-                    return isCurrent;
+                    return event.isOnDay(begin, courseStarting) || event.isOnDay(end, courseStarting);
                 })
+                .map(function(ce) { return ce.course.toJSON(); })
                 .value();
-
-            debugger;
         }
 
         var response = outContextInformation.getItems()[0];
