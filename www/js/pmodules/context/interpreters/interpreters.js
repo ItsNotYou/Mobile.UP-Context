@@ -1,2 +1,5 @@
-define([], function() {
+define([
+    './CurrentCoursesInterpreter'
+], function() {
+    return arguments;
 });

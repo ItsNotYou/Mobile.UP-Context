@@ -59,8 +59,10 @@ require.config({
             'suncalc': 'vendor/suncalc',
             'i18next-client': 'vendor/i18next.amd',
             // Context implementation
-            'contactJS': 'vendor/contactJS/contactJS',
+            'ContextDetector': 'pmodules/context/ContextDetector',
+            'ContextDescriptions': 'pmodules/context/ContextDescriptions',
             'AdaptationEngine': 'vendor/contactJS/AdaptationEngine',
+            'contactJS': 'vendor/contactJS/contactJS',
             'MathUuid': 'vendor/contactJS/MathUuid',
             'widgets': 'pmodules/context/widgets/widgets',
             'interpreters': 'pmodules/context/interpreters/interpreters',

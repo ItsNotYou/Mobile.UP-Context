@@ -10,11 +10,12 @@ define([
 	'Session',
 	'history',
 	'viewContainer',
+	'ContextDetector',
 	'controllerLoader',
 	'jquerymobile',
 	'datebox',
 	'LocalStore'
-	], function($, _, Backbone, BackboneMVC, _str, utils, FastClick, Session, customHistory, ViewHelper, controllerLoader){
+	], function($, _, Backbone, BackboneMVC, _str, utils, FastClick, Session, customHistory, ViewHelper, ContextDetector, controllerLoader){
 		var viewContainer = ViewHelper.viewContainer;
 		viewContainer.initialize();
 		var pageContainer = ViewHelper.pageContainer;
@@ -75,6 +76,8 @@ define([
 							customHistory.goBack();
     					}
     				}, false);
+
+					new ContextDetector().start();
 				}
 
 				// Initialize Backbone override
@@ -92,6 +95,8 @@ define([
 				var baseUrl = document.location.pathname.replace(/\/index\.html/, '');
 				//Backbone URL-Routing-Funktion starten
 				customHistory.startTracking(baseUrl);
+
+				$(function() { new ContextDetector().start(); });
 
 				this._gotoEntryPoint();
 			},

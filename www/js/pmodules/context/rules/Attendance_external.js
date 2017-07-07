@@ -1,0 +1,55 @@
+define([
+    'underscore',
+    'contactJS',
+    'ContextDescriptions',
+    '../StatementSender',
+    '../ChangeAdapter'
+], function(_, contactJS, ci, StatementSender) {
+
+    var sender = new StatementSender();
+
+    var diff = function(former, current) {
+        var sFormer = _.map(former, JSON.stringify);
+        var sCurrent = _.map(current, JSON.stringify);
+
+        var same = _.intersection(sFormer, sCurrent);
+        var added = _.difference(sCurrent, same);
+        var removed = _.difference(sFormer, same);
+
+        return {
+            added: _.map(added, JSON.parse),
+            removed: _.map(removed, JSON.parse),
+            same: _.map(same, JSON.parse)
+        }
+    };
+
+    var context = {
+        runningCourses: ci.get("CI_CURRENTLY_RUNNING_COURSES")
+    };
+
+    return [
+        // TODO: open course, close course
+        {
+            id: "1caf2b4f-cedf-4cad-ba58-236f68dbfcf9",
+            relatedContextInformation: [context.runningCourses],
+            condition: function(R) {
+                R.when(context.runningCourses.isDifferentFromLastValue("CI_CURRENTLY_RUNNING_COURSES", this));
+            },
+            consequence: function(R) {
+                var value = context.runningCourses.updateLastValue("CI_CURRENTLY_RUNNING_COURSES", this);
+                var diffResult = diff(value.former, value.current);
+
+                _.each(diffResult.added, function(course) {
+                    // TODO: open course
+                    sender.sendOpenedCourse(course);
+                });
+                _.each(diffResult.removed, function(course) {
+                    // TODO: close course
+                    sender.sendClosedCourse(course);
+                });
+
+                R.next();
+            }
+        }
+    ];
+});
