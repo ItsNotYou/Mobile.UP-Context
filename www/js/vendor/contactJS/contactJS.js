@@ -2522,6 +2522,8 @@ define('component',['data', 'dataList'],
                 }
             };
 
+            Component.prototype.verbose = false;
+
             /**
              * Create a log message.
              *
