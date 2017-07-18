@@ -90,19 +90,54 @@ define(['ADL'], function (xapi) {
                 "objectType": "Activity"
             };
         },
-        event: function (event) {
-            if (!event.semester) {
+        event: function(course) {
+            if (!course.semesterSC) {
+                debugger;
+                throw "Course semester required";
+            }
+            if (!course.courseId) {
+                debugger;
+                throw "Course course id required";
+            }
+
+            return {
+                "id": "http://xapi.uni-potsdam.de/event/" + course.semesterSC + "/" + course.courseId,
+                "definition": {
+                    "name": {
+                        "en-US": course.courseName ? course.courseName : "event"
+                    },
+                    "description": {
+                        "en-US": "Represents an event that occurs at a certain location during a particular period of time. Objects of this type MAY contain the additional properties specified in Section 3.3."
+                    },
+                    "type": "http://activitystrea.ms/schema/1.0/event"
+                },
+                "objectType": "Activity"
+            }
+        },
+        /**
+         *
+         * @param event
+         * @param event.semesterSC
+         * @param event.courseId
+         * @param event.startTime
+         * @param event.lecturers
+         * @param event.lecturers.lecturer
+         * @param [event.courseName=event]
+         * @returns xAPI activity
+         */
+        courseEvent: function (event) {
+            if (!event.semesterSC) {
                 throw "Event semester required";
             }
-            if (!event.headerId) {
+            if (!event.courseId) {
                 throw "Event header id required";
             }
 
             return {
-                "id": "http://xapi.uni-potsdam.de/event/" + event.semester + "/" + event.headerId,
+                "id": "http://xapi.uni-potsdam.de/event/" + event.semesterSC + "/" + event.courseId,
                 "definition": {
                     "name": {
-                        "en-US": "event"
+                        "en-US": event.courseName ? event.courseName : "event"
                     },
                     "description": {
                         "en-US": "Represents an event that occurs at a certain location during a particular period of time. Objects of this type MAY contain the additional properties specified in Section 3.3."

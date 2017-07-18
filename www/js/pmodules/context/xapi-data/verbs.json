@@ -22,5 +22,17 @@
     "display": {
       "en-US": "attended"
     }
+  },
+  "opened": {
+    "id": "http://activitystrea.ms/schema/1.0/open",
+    "display": {
+      "en-US": "opened"
+    }
+  },
+  "closed":{
+    "id": "http://activitystrea.ms/schema/1.0/close",
+    "display": {
+      "en-US": "closed"
+    }
   }
 }
