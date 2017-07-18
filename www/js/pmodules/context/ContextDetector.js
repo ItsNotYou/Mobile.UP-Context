@@ -1,6 +1,6 @@
 define([
     'underscore',
-    './StatementSender',
+    'StatementSender',
     './ChangeDetector',
     'AdaptationEngine',
     './rules/rules'
@@ -33,6 +33,7 @@ define([
     ContextDetector.prototype.addRules = function (rules) {
     };
 
+    /*
     try {
         var sender = new StatementSender();
         sender.sendAttendedCourse({
@@ -69,6 +70,7 @@ define([
     } else {
         console.log("No update required");
     }
+    */
 
     return ContextDetector;
 });

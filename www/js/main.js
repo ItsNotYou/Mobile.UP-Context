@@ -61,6 +61,7 @@ require.config({
             // Context implementation
             'ContextDetector': 'pmodules/context/ContextDetector',
             'ContextDescriptions': 'pmodules/context/ContextDescriptions',
+            'StatementSender': 'pmodules/context/statement-sender/StatementSender',
             'AdaptationEngine': 'vendor/contactJS/AdaptationEngine',
             'contactJS': 'vendor/contactJS/contactJS',
             'MathUuid': 'vendor/contactJS/MathUuid',

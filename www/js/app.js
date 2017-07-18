@@ -57,6 +57,16 @@ define([
   					document.addEventListener("deviceready", onDeviceReady, false);
 				});
 
+				var startContextDetector = function() {
+						var session = new Session();
+						if (session.get('up.session.authenticated')) {
+							console.log("Starte ContextDetector");
+							new ContextDetector().start();
+						} else {
+							console.log("Starte ContextDetector NICHT");
+						}
+				};
+
 				/**
 				 *	functions get exectuted when device is ready and handles hiding of splashscreen and backButton navigation
 				 */
@@ -77,7 +87,7 @@ define([
     					}
     				}, false);
 
-					new ContextDetector().start();
+					startContextDetector();
 				}
 
 				// Initialize Backbone override
@@ -96,7 +106,7 @@ define([
 				//Backbone URL-Routing-Funktion starten
 				customHistory.startTracking(baseUrl);
 
-				$(function() { new ContextDetector().start(); });
+				$(startContextDetector);
 
 				this._gotoEntryPoint();
 			},
