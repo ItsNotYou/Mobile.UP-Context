@@ -1,5 +1,6 @@
 define([
-    './CurrentCoursesInterpreter'
+    './CurrentCoursesInterpreter',
+    './CurrentlyRunningCoursesInterpreter'
 ], function() {
     return arguments;
 });
