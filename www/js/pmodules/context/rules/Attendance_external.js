@@ -2,13 +2,14 @@ define([
     'underscore',
     'contactJS',
     'ContextDescriptions',
-    '../StatementSender',
+    'StatementSender',
     '../ChangeAdapter'
 ], function(_, contactJS, ci, StatementSender) {
 
-    var sender = new StatementSender();
-
     var diff = function(former, current) {
+        former = former ? [].concat(former) : [];
+        current = current ? [].concat(current) : [];
+
         var sFormer = _.map(former, JSON.stringify);
         var sCurrent = _.map(current, JSON.stringify);
 
@@ -39,6 +40,7 @@ define([
                 var value = context.runningCourses.updateLastValue("CI_CURRENTLY_RUNNING_COURSES", this);
                 var diffResult = diff(value.former, value.current);
 
+                var sender = new StatementSender();
                 _.each(diffResult.added, function(course) {
                     // TODO: open course
                     sender.sendOpenedCourse(course);

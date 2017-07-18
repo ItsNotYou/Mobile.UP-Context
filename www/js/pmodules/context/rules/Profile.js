@@ -3,12 +3,11 @@ define([
     'jquery',
     'contactJS',
     'ContextDescriptions',
-    '../StatementSender',
+    'StatementSender',
     '../ChangeAdapter'
 ], function (_, $, _contactJS, ci, StatementSender) {
 
     var _d = new _contactJS.Discoverer();
-    var sender = new StatementSender();
 
     var newCourses = function(former, current) {
         var formerJson = _.map(former, JSON.stringify);
@@ -32,7 +31,8 @@ define([
             },
             consequence: function(R) {
                 var value = context.deviceInfo.updateLastValue("PROFILE_CI_DEVICE_INFO", this);
-                sender.sendDeviceDetails(value.current);
+
+                new StatementSender().sendDeviceDetails(value.current);
                 console.log("CI_DEVICE_INFO rule fired");
                 R.next();
             }
@@ -46,7 +46,8 @@ define([
             consequence: function(R) {
                 var value = context.attendedCourses.updateLastValue("PROFILE_CI_ATTENDED_COURSES", this);
                 var courses = newCourses(value.former, value.current);
-                debugger;
+
+                var sender = new StatementSender();
                 _.each(courses, function(course) {
                     sender.sendAttendedCourse(course);
                 });
