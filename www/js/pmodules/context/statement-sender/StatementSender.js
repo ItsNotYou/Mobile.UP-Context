@@ -1,32 +1,12 @@
 define([
     'ADL',
-    './xapi-data/activities',
-    'json!./xapi-data/verbs.json',
-    './xapi-data/context',
-    'Session'
-], function(xapi, activities, verbs, context, Session) {
-
-    var StatementSender = function() {
-        var session = new Session();
-        if (!session.get('up.session.authenticated')) {
-            throw {
-                name: "LoginException",
-                message: "User is not logged in",
-                toString: function() { return this.name + ": " + this.message; }
-            };
-        }
-
-        // Init xAPI wrapper
-        var conf = {
-            endpoint: "http://lrs.soft.cs.uni-potsdam.de/data/xAPI/",
-            auth: "Basic " + xapi.toBase64('f1e520976fb3cd27127bef0bfd2c4af924bfd2fc:b4f0955aea62c4d9f94a98e32a400e665f7338a7'),
-            strictCallbacks: true
-        };
-        xapi.ADL.XAPIWrapper.changeConfig(conf);
-
-        // Init user agent
-        this._agent = new xapi.ADL.XAPIStatement.Agent('mailto:' + session.get("up.session.username") + '@uni-potsdam.de', session.get("up.session.username"));
-    };
+    '../xapi-data/activities',
+    'json!../xapi-data/verbs.json',
+    '../xapi-data/context',
+    'Session',
+    './BaseSender',
+    './CourseSender'
+], function(xapi, activities, verbs, context, Session, StatementSender) {
 
     /**
      *
@@ -75,33 +55,6 @@ define([
 
         // TODO: Add to send queue?
         xapi.ADL.XAPIWrapper.sendStatement(stmt, function (err, res, body) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-
-            console.log("[" + body.id + "]: " + res.status + " - " + res.statusText);
-        });
-    };
-
-    /**
-     *
-     * @param course
-     * @param {string} course.semester Course semester
-     * @param {string} course.headerId Course header id as noted in university calendar
-     */
-    StatementSender.prototype.sendAttendedCourse = function(course) {
-        var stmt = new xapi.ADL.XAPIStatement(
-            this._agent,
-            verbs.attended,
-            activities.event(course)
-        );
-        stmt.context = context.attendance();
-
-        console.log(stmt);
-
-        // TODO: Add to send queue?
-        xapi.ADL.XAPIWrapper.sendStatement(stmt, function(err, res, body) {
             if (err) {
                 console.error(err);
                 return;
