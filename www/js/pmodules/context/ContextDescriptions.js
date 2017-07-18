@@ -26,7 +26,7 @@ define([
         CI_CURRENT_DATETIME: {
             name: "CI_CURRENT_DATETIME",
             type: "DATE",
-            parameterList: [["CP_UNIT", "STRING", "ISO 8601"]]
+            parameterList: [["CP_UNIT", "STRING", "ISO-8601"]]
         }
     };
 
