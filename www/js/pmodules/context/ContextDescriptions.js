@@ -11,17 +11,17 @@ define([
         CI_ATTENDED_COURSES: {
             name: "CI_ATTENDED_COURSES",
             type: "ARRAY",
-            parameterList: []
+            parameterList: [["CP_UNIT", "OBJECT", "COURSE"]]
         },
         CI_CURRENTLY_ATTENDED_COURSES: {
             name: "CI_CURRENTLY_ATTENDED_COURSES",
             type: "ARRAY",
-            parameterList: []
+            parameterList: [["CP_UNIT", "OBJECT", "COURSE_EVENT"]]
         },
         CI_CURRENTLY_RUNNING_COURSES: {
             name: "CI_CURRENTLY_RUNNING_COURSES",
             type: "ARRAY",
-            parameterList: []
+            parameterList: [["CP_UNIT", "OBJECT", "COURSE_EVENT"]]
         },
         CI_CURRENT_DATETIME: {
             name: "CI_CURRENT_DATETIME",
