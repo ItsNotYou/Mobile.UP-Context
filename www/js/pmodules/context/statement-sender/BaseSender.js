@@ -3,8 +3,9 @@ define([
     '../xapi-data/activities',
     'json!../xapi-data/verbs.json',
     '../xapi-data/context',
-    'Session'
-], function(xapi, activities, verbs, context, Session) {
+    'Session',
+    'jquery'
+], function(xapi, activities, verbs, context, Session, $) {
 
     var StatementSender = function() {
         var session = new Session();
@@ -26,6 +27,28 @@ define([
 
         // Init user agent
         this._agent = new xapi.ADL.XAPIStatement.Agent('mailto:' + session.get("up.session.username") + '@uni-potsdam.de', session.get("up.session.username"));
+    };
+
+    /**
+     * Sends a xAPI statement to the designated LRS
+     * @param stmt xAPI statement
+     * @returns jQuery promise
+     */
+    StatementSender.prototype._sendStatement = function(stmt) {
+        var result = $.Deferred();
+
+        // TODO: Add to send queue?
+        xapi.ADL.XAPIWrapper.sendStatement(stmt, function(err, res, body) {
+            if (err) {
+                if (console.error) console.error(err);
+                result.reject(err);
+            } else {
+                console.log("[" + body.id + "]: " + res.status + " - " + res.statusText);
+                result.resolve(body.id);
+            }
+        });
+
+        return result.promise();
     };
 
     return StatementSender;

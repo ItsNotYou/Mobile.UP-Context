@@ -42,7 +42,6 @@ define([
 
                 var sender = new StatementSender();
                 _.each(diffResult.added, function(course) {
-                    // TODO: open course
                     sender.sendOpenedCourse(course);
                 });
                 _.each(diffResult.removed, function(course) {
