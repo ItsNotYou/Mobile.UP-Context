@@ -46,8 +46,8 @@ define([
     ContextDescriptions.prototype.getRaw = function (contextName) {
         var result = contextDescriptions[contextName];
         if (!result) {
-            if (console.error) console.error("The requested contextName is not available");
-            throw "The requested contextName is not available";
+            if (console.error) console.error("The requested contextName '" + contextName + "' is not available");
+            throw "The requested contextName '" + contextName + "' is not available";
         } else {
             return result;
         }
