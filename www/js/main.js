@@ -23,6 +23,7 @@ require.config({
         'fastclick': 'vendor/fastclick.min',
         'hammerjs': 'vendor/hammer',
         'uri': 'vendor/src',
+        'turf': 'vendor/turf.min',
         // Our own libraries
         'PulsAPI': 'lib/PulsAPI',
         'utils': 'lib/utils',

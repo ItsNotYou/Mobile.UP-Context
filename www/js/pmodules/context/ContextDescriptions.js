@@ -27,6 +27,11 @@ define([
             name: "CI_CURRENT_DATETIME",
             type: "DATE",
             parameterList: [["CP_UNIT", "STRING", "ISO-8601"]]
+        },
+        CI_NEAR_BUILDINGS: {
+            name: "CI_NEAR_BUILDINGS",
+            type: "ARRAY",
+            parameterList: [["CP_UNIT", "OBJECT", "BUILDING"]]
         }
     };
 
