@@ -21,7 +21,12 @@ define([
         CI_CURRENTLY_RUNNING_COURSES: {
             name: "CI_CURRENTLY_RUNNING_COURSES",
             type: "ARRAY",
-            parameterList: [["CP_UNIT", "OBJECT", "COURSE_EVENT"]]
+            parameterList: [["CP_UNIT", "OBJECT", "COURSE_EVENT"], ["CP_UNIT", "TIMESPAN", "EXACT"]]
+        },
+        CI_CURRENTLY_RUNNING_COURSES_FUZZY: {
+            name: "CI_CURRENTLY_RUNNING_COURSES",
+            type: "ARRAY",
+            parameterList: [["CP_UNIT", "OBJECT", "COURSE_EVENT"], ["CP_UNIT", "TIMESPAN", "FUZZY"]]
         },
         CI_CURRENT_DATETIME: {
             name: "CI_CURRENT_DATETIME",

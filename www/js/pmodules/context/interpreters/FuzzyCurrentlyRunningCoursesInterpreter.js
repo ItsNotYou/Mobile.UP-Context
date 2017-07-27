@@ -6,21 +6,21 @@ define([
     './RunningCoursesFilter'
 ], function (_, contactJS, ci, moment, runningCoursesFilter) {
 
-    var CurrentCoursesInterpreter = function (discoverer) {
+    var FuzzyCurrentCoursesInterpreter = function (discoverer) {
         contactJS.Interpreter.call(this, discoverer);
-        this.name = "CurrentCoursesInterpreter";
+        this.name = "FuzzyCurrentCoursesInterpreter";
         return this;
     };
 
-    CurrentCoursesInterpreter.description = {
+    FuzzyCurrentCoursesInterpreter.description = {
         in: [ci.getRaw("CI_ATTENDED_COURSES"), ci.getRaw("CI_CURRENT_DATETIME")],
-        out: [ci.getRaw("CI_CURRENTLY_RUNNING_COURSES")]
+        out: [ci.getRaw("CI_CURRENTLY_RUNNING_COURSES_FUZZY")]
     };
 
-    CurrentCoursesInterpreter.prototype = Object.create(contactJS.Interpreter.prototype);
-    CurrentCoursesInterpreter.prototype.constructor = CurrentCoursesInterpreter;
+    FuzzyCurrentCoursesInterpreter.prototype = Object.create(contactJS.Interpreter.prototype);
+    FuzzyCurrentCoursesInterpreter.prototype.constructor = FuzzyCurrentCoursesInterpreter;
 
-    CurrentCoursesInterpreter.prototype._interpretData = function (inContextInformation, outContextInformation, callback) {
+    FuzzyCurrentCoursesInterpreter.prototype._interpretData = function (inContextInformation, outContextInformation, callback) {
         var attendedCourses = inContextInformation.getValueForContextInformationOfKind(this.getInputContextInformation().getItems()[0]);
         var nowRaw = inContextInformation.getValueForContextInformationOfKind(this.getInputContextInformation().getItems()[1]);
 
@@ -28,12 +28,12 @@ define([
         if (attendedCourses === contactJS.ContextInformation.VALUE_UNKNOWN || nowRaw === contactJS.ContextInformation.VALUE_UNKNOWN) {
             result = contactJS.ContextInformation.VALUE_UNKNOWN;
         } else {
-            var begin = moment(nowRaw);
-            var end = moment(nowRaw);
+            var begin = moment(nowRaw).add(10, "minutes");
+            var end = moment(nowRaw).subtract(10, "minutes");
 
             result = runningCoursesFilter.filterRunningCourses(begin, end, nowRaw, attendedCourses);
 
-            console.log("Currently running courses", result);
+            console.log("Currently running courses (fuzzy)", result);
         }
 
         var response = outContextInformation.getItems()[0];
@@ -41,5 +41,5 @@ define([
         callback([response]);
     };
 
-    return CurrentCoursesInterpreter;
+    return FuzzyCurrentCoursesInterpreter;
 });
