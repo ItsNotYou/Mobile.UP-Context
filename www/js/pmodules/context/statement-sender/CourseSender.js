@@ -67,7 +67,7 @@ define([
         stmt.context = context.attendance_detailed();
 
         // Set event start time
-        stmt.timestamp = createTimestamp(courseAndEvent.now, courseAndEvent.startTime);
+        stmt.timestamp = createTimestamp(courseAndEvent.today, courseAndEvent.startTime);
 
         this._sendStatement(stmt);
     };
@@ -88,7 +88,7 @@ define([
         stmt.context = context.attendance_detailed();
 
         // Set event start time
-        stmt.timestamp = createTimestamp(courseAndEvent.now, courseAndEvent.endTime);
+        stmt.timestamp = createTimestamp(courseAndEvent.today, courseAndEvent.endTime);
 
         this._sendStatement(stmt);
     };

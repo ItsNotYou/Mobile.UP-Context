@@ -78,7 +78,14 @@ define([
                     return eventBegin <= localBegin && localEnd <= eventEnd;
                 })
                 .map(function(ce) {
-                    ce.event.set("now", nowRaw);
+                    // We have to use "today" instead of "now" because "now" would make comparison between two timestamp dependant
+                    var today = moment(nowRaw).set({
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                        milliseconds: 0
+                    });
+                    ce.event.set("today", today.toISOString());
                     return ce.event.toJSON();
                 })
                 .value();
