@@ -33,6 +33,16 @@ define([
             type: "DATE",
             parameterList: [["CP_UNIT", "STRING", "ISO-8601"]]
         },
+        CI_USER_LOCATION: {
+            name: "CI_USER_LOCATION",
+            type: "POSITION",
+            parameterList: [["CP_UNIT", "OBJECT", "POSITION"]]
+        },
+        CI_AVAILABLE_BUILDINGS: {
+            name: "CI_AVAILABLE_BUILDINGS",
+            type: "ARRAY",
+            parameterList: [["CP_UNIT", "OBJECT", "BUILDING"]]
+        },
         CI_NEAR_BUILDINGS: {
             name: "CI_NEAR_BUILDINGS",
             type: "ARRAY",

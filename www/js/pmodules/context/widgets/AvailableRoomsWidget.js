@@ -22,7 +22,7 @@ define([
     };
 
     AvailableBuildingsWidget.description = {
-        out: [ci.getRaw("CI_NEAR_BUILDINGS")],
+        out: [ci.getRaw("CI_AVAILABLE_BUILDINGS")],
         const: [{ name: "", type: "" }],
         updateInterval: 1000 * 60 * 24 // once per day
     };
@@ -52,6 +52,10 @@ define([
                     if (name && name.startsWith(prefix)) {
                         // The house name could be "Haus 26" or "Haus 10a"
                         building = name.substr(prefix.length);
+                        // Remove leading zeros
+                        while (building.length > 0 && building[0] === '0') {
+                            building = building.substr(1);
+                        }
                     }
 
                     // Try to translate campus
