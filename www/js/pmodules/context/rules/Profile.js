@@ -7,8 +7,6 @@ define([
     '../ChangeAdapter'
 ], function (_, $, _contactJS, ci, StatementSender) {
 
-    var _d = new _contactJS.Discoverer();
-
     var newCourses = function(former, current) {
         var formerJson = _.map(former, JSON.stringify);
         var currentJson = _.map(current, JSON.stringify);
