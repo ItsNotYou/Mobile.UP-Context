@@ -1,5 +1,5 @@
 define([
-    //'./Profile',
+    './Profile',
     './Attendance',
     './Attendance_external'
 ], function() {

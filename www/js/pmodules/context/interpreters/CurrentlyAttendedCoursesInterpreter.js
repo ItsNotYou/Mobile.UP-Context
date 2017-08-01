@@ -49,9 +49,7 @@ define([
                     // Find courses with near buildings
                     return _.findWhere(nearBuildings, model.location);
                 })
-                .map(function(model) {
-                    return model.course;
-                })
+                .map(function(model) { return model.course; })
                 .value();
         }
 
