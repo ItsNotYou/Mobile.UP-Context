@@ -116,6 +116,16 @@
     <!-- Start page and access whitelist -->
     <content src="index.html" />
 
+    <!-- Background geo location -->
+    <plugin name="cordova-background-geolocation-lt">
+        <!-- iOS only -->
+        <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Background location-tracking is required" />
+        <variable name="LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION" value="Background location-tracking is required" />
+        <variable name="MOTION_USAGE_DESCRIPTION" value="Using the accelerometer increases battery-efficiency by intelligently toggling location-tracking only when the device is detected to be moving" />
+        <!-- Android only -->
+        <variable name="LICENSE" value="YOUR_LICENSE_KEY" />
+    </plugin>
+
     <!-- Remaining plugins -->
     <plugin name="cordova-plugin-inappbrowser" spec="^1.4.0" />
     <plugin name="cordova-plugin-dialogs" spec="^1.2.1" />
