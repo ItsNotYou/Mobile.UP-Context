@@ -34,5 +34,11 @@
     "display": {
       "en-US": "closed"
     }
+  },
+  "experienced":{
+    "id": "http://activitystrea.ms/schema/1.0/experience",
+    "display": {
+      "en-US": "experienced"
+    }
   }
 }

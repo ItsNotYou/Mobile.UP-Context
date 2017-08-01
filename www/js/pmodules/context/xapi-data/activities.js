@@ -146,6 +146,21 @@ define(['ADL'], function (xapi) {
                 },
                 "objectType": "Activity"
             }
+        },
+        heartbeat: function() {
+            return {
+                "id": "http://xapi.uni-potsdam.de/debug/heartbeat/" + xapi.ADL.ruuid(),
+                "definition": {
+                    "name": {
+                        "en-US": "Heartbeat"
+                    },
+                    "description": {
+                        "en-US": "Represents a keepalive message within an application."
+                    },
+                    "type": "http://activitystrea.ms/schema/1.0/alert"
+                },
+                "objectType": "Activity"
+            }
         }
     }
 });

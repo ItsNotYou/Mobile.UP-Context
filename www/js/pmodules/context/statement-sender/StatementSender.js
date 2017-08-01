@@ -5,6 +5,7 @@ define([
     '../xapi-data/context',
     'Session',
     './BaseSender',
+    './HeartbeatSender',
     './CourseSender'
 ], function(xapi, activities, verbs, context, Session, StatementSender) {
 
