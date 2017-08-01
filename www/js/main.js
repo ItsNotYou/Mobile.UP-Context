@@ -24,6 +24,10 @@ require.config({
         'hammerjs': 'vendor/hammer',
         'uri': 'vendor/src',
         'turf': 'vendor/turf.min',
+        // Testing frameworks
+        'jasmine': 'https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine',
+        'jasmine-html': 'https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine-html',
+        'jasmine-boot': 'https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/boot',
         // Our own libraries
         'PulsAPI': 'lib/PulsAPI',
         'utils': 'lib/utils',
@@ -43,6 +47,10 @@ require.config({
         'mdown': 'vendor/require-extensions/mdown',
         'propertyParser': 'vendor/require-extensions/propertyParser',
         'markdownConverter': 'vendor/require-extensions/Markdown.Converter'
+    },
+    shim: {
+        'jasmine-html': { deps : ['jasmine'] },
+        'jasmine-boot': { deps : ['jasmine', 'jasmine-html'] }
     },
     // "Paths configurations should only be used for folders, not modules themselves.
     // Map configurations apply to individual modules." See
@@ -84,14 +92,20 @@ requirejs.onError = function(error){
 	}
 };
 
-// Unfortunately, requirejs cannot force jquerymobile
-// to load after jqm-config. Therefore, we have to
-// force this dependency by modifying the jQuery Mobile
-// code base. See
-//
-// https://github.com/jrburke/requirejs/issues/358
-//
-// for details
-require(['jquery', 'jquerymobile-config', 'jquerymobile', 'app'], function(){
-    app.initialize();
-});
+// Run app or run tests?
+if (typeof test_runner === "undefined") {
+
+    // Unfortunately, requirejs cannot force jquerymobile to load after jqm-config. Therefore, we have to force this dependency by modifying the jQuery Mobile code base. See
+    //
+    // https://github.com/jrburke/requirejs/issues/358
+    //
+    // for details
+    require(['jquery', 'jquerymobile-config', 'jquerymobile', 'app'], function () {
+        app.initialize();
+    });
+
+} else {
+
+    test_runner();
+
+}
