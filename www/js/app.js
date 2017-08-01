@@ -58,13 +58,13 @@ define([
 				});
 
 				var startContextDetector = function() {
-						var session = new Session();
-						if (session.get('up.session.authenticated')) {
-							console.log("Starte ContextDetector");
-							new ContextDetector().start();
-						} else {
-							console.log("Starte ContextDetector NICHT");
-						}
+					var session = new Session();
+					if (session.get('up.session.authenticated')) {
+						console.log("Starte ContextDetector");
+						new ContextDetector().start();
+					} else {
+						console.log("Starte ContextDetector NICHT");
+					}
 				};
 
 				/**
@@ -87,7 +87,7 @@ define([
     					}
     				}, false);
 
-					startContextDetector();
+					$(startContextDetector);
 				}
 
 				// Initialize Backbone override
