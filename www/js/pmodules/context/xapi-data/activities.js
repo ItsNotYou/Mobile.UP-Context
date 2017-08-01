@@ -63,8 +63,8 @@ define(['ADL'], function (xapi) {
             return result;
         },
         place: function (location) {
-            if (!location || !location.latitude || !location.longitude) {
-                throw "Location with latitude and longitude required";
+            if (!location || !location.latitude || !location.longitude || !location.accuracy) {
+                throw "Location with latitude, longitude and accuracy required";
             }
 
             return {
@@ -80,11 +80,13 @@ define(['ADL'], function (xapi) {
                     "extensions": {
                         "http://id.tincanapi.com/extension/geojson": {
                             "type": "Feature",
+                            "properties": {},
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [location.longitude, location.latitude]
                             }
-                        }
+                        },
+                        "http://id.tincanapi.com/extension/geoaccuracy": location.accuracy
                     }
                 },
                 "objectType": "Activity"

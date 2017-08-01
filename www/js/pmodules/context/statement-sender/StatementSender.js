@@ -46,6 +46,7 @@ define([
      * @param location current user location
      * @param {number} location.latitude Latitude
      * @param {number} location.longitude Longitude
+     * @param {number} location.accuracy Accuracy in meters
      */
     StatementSender.prototype.sendUserLocation = function(location) {
         var stmt = new xapi.ADL.XAPIStatement(

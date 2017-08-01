@@ -1,11 +1,9 @@
 define([
     'underscore',
-    'jquery',
-    'contactJS',
     'ContextDescriptions',
     'StatementSender',
     '../ChangeAdapter'
-], function (_, $, _contactJS, ci, StatementSender) {
+], function (_, ci, StatementSender) {
 
     var context = {
         location: ci.get("CI_USER_LOCATION")
@@ -20,6 +18,18 @@ define([
             },
             consequence: function(R) {
                 new StatementSender().sendHeartbeat();
+                R.next();
+            }
+        },
+        {
+            id: "0a917528-befb-470e-bfa4-96e0580d6cdf",
+            relatedContextInformation: [context.location],
+            condition: function(R) {
+                R.when(context.location.isDifferentFromLastValue("DEBUG_USER_LOCATION", this));
+            },
+            consequence: function(R) {
+                var value = context.location.updateLastValue("DEBUG_USER_LOCATION", this);
+                new StatementSender().sendUserLocation(value.current.coords);
                 R.next();
             }
         }
