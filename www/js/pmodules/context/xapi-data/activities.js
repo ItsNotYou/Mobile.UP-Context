@@ -82,7 +82,7 @@ define(['ADL'], function (xapi) {
                             "type": "Feature",
                             "geometry": {
                                 "type": "Point",
-                                "coordinates": [location.latitude, location.longitude]
+                                "coordinates": [location.longitude, location.latitude]
                             }
                         }
                     }
