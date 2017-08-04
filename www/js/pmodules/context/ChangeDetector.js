@@ -1,4 +1,6 @@
-define([], function() {
+define([
+    "moment"
+], function(moment) {
 
     var localStorageKey = "context-change";
     var values = {};
@@ -23,7 +25,7 @@ define([], function() {
         if (supportLocalStorage) {
             values = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
         }
-        return values[key];
+        return values[key] || {};
     };
 
     var setLocalValue = function(key, value) {
@@ -44,15 +46,29 @@ define([], function() {
 
     var ChangeDetector = function() {};
 
+    ChangeDetector.prototype.isOlderThan = function(key, age) {
+        var now = moment();
+        var then = moment().subtract(age, "ms");
+        var lastUpdate = getLocalValue(key).lastUpdate;
+        if (lastUpdate) {
+            return then.isAfter(lastUpdate) || now.isBefore(lastUpdate);
+        } else {
+            return true;
+        }
+    };
+
     ChangeDetector.prototype.isDifferentFromLastValue = function(key, value) {
-        var expected = JSON.stringify(getLocalValue(key));
+        var expected = JSON.stringify(getLocalValue(key).value);
         var actual = JSON.stringify(value);
         return expected !== actual;
     };
 
     ChangeDetector.prototype.updateLastValue = function(key, value) {
-        var former = getLocalValue(key);
-        setLocalValue(key, value);
+        var former = getLocalValue(key).value;
+        setLocalValue(key, {
+            value: value,
+            lastUpdate: moment().toISOString()
+        });
         return former;
     };
 
