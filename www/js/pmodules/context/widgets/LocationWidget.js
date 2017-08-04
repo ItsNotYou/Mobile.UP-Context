@@ -4,6 +4,77 @@ define([
     'ContextDescriptions'
 ], function(_, contactJS, ci) {
 
+    var NativeLocator = function() {};
+    NativeLocator.prototype.constructor = NativeLocator;
+    NativeLocator.prototype.start = function() {
+        var bgGeo = window.BackgroundGeolocation;
+
+        //This callback will be executed every time a geolocation is recorded in the background.
+        var callbackFn = _.bind(function(location, taskId) {
+            this._lastKnownLocation = location;
+            console.log('- Location: ', JSON.stringify(location));
+            // Must signal completion of your callbackFn.
+            bgGeo.finish(taskId);
+        }, this);
+
+        // This callback will be executed if a location-error occurs.  Eg: this will be called if user disables location-services.
+        var failureFn = _.bind(function(errorCode) {
+            console.warn('- BackgroundGeoLocation error: ', errorCode);
+        }, this);
+
+        bgGeo.on('location', callbackFn, failureFn);
+        bgGeo.on('heartbeat', _.bind(function(params) {
+            this._lastKnownLocation = params.location;
+            console.log('- hearbeat');
+        }, this));
+
+        // Prioritize battery life
+        bgGeo.configure({
+            // Common Options
+            desiredAccuracy: 1000,
+            distanceFilter: 100,
+            stopOnTerminate: false,
+            startOnBoot: true,
+            // iOS options
+            useSignificantChangesOnly: true,
+            preventSuspend: true,
+            // Android options
+            foregroundService: true
+        }, function(state) {
+            // This callback is executed when the plugin is ready to use.
+            console.log("BackgroundGeolocation ready: ", state);
+            if (!state.enabled) {
+                bgGeo.start();
+            }
+        });
+    };
+    NativeLocator.prototype.stop = function() {
+        window.BackgroundGeolocation.stop();
+    };
+    NativeLocator.prototype.getPosition = function() {
+        return this._lastKnownLocation;
+    };
+
+    var BrowserLocator = function() {};
+    BrowserLocator.prototype.constructor = BrowserLocator;
+    BrowserLocator.prototype.start = function() {
+        var success = _.bind(function(position) {
+            this._lastKnownPosition = position;
+        }, this);
+
+        var error = _.bind(function(err) {
+            console.error('ERROR(' + err.code + '): ' + err.message);
+        }, this);
+
+        this._watchId = navigator.geolocation.watchPosition(success, error);
+    };
+    BrowserLocator.prototype.stop = function() {
+        navigator.geolocation.clearWatch(this._watchId);
+    };
+    BrowserLocator.prototype.getPosition = function() {
+        return this._lastKnownPosition;
+    };
+
     var LocationWidget = function(discoverer) {
         contactJS.Widget.call(this, discoverer);
         this.name = "LocationWidget";
@@ -25,63 +96,6 @@ define([
         updateInterval: 1000 * 30 // twice per minute
     };
 
-    LocationWidget.prototype.startGeoLocation = function() {
-        // Get a reference to the plugin.
-        var bgGeo = window.BackgroundGeolocation;
-
-        //This callback will be executed every time a geolocation is recorded in the background.
-        var callbackFn = _.bind(function(location, taskId) {
-            this.lastKnownLocation = location;
-            console.log('- Location: ', JSON.stringify(location));
-            // Must signal completion of your callbackFn.
-            bgGeo.finish(taskId);
-        }, this);
-
-        // This callback will be executed if a location-error occurs.  Eg: this will be called if user disables location-services.
-        var failureFn = _.bind(function(errorCode) {
-            console.warn('- BackgroundGeoLocation error: ', errorCode);
-        }, this);
-
-        bgGeo.on('location', callbackFn, failureFn);
-        bgGeo.on('heartbeat', _.bind(function(params) {
-            this.lastKnownLocation = params.location;
-            console.log('- hearbeat');
-        }, this));
-
-        // BackgroundGeoLocation is highly configurable.
-        bgGeo.configure({
-            // Common Options
-            desiredAccuracy: 1000,
-            distanceFilter: 100,
-            stopOnTerminate: false,
-            startOnBoot: true,
-            // iOS options
-            useSignificantChangesOnly: true,
-            preventSuspend: true,
-            // Android Options
-            foregroundService: true,
-            // Logging & Debug Options
-            debug: true,  // <-- Debug sounds & notifications.
-
-
-
-            stationaryRadius: 25,
-
-            // Activity Recognition config
-            activityRecognitionInterval: 10000,
-            stopTimeout: 5,
-            // Application config
-
-
-        }, function(state) {
-            // This callback is executed when the plugin is ready to use.
-            console.log("BackgroundGeolocation ready: ", state);
-            if (!state.enabled) {
-                bgGeo.start();
-            }
-        });
-    };
-
     LocationWidget.prototype.queryGenerator = function(callback) {
         var finish = _.bind(function(result) {
             var response = new contactJS.ContextInformationList();
@@ -89,12 +103,12 @@ define([
             this._sendResponse(response, callback);
         }, this);
 
-        if (!this.geoLocationStarted) {
-            this.startGeoLocation();
-            this.geoLocationStarted = true;
+        if (!this.geoLocator) {
+            this.geoLocator = window.cordova ? new NativeLocator() : new BrowserLocator();
+            this.geoLocator.start();
         }
 
-        var location = this.lastKnownLocation;
+        var location = this.geoLocator.getPosition();
         if (location) {
             finish(location);
         } else {
@@ -102,8 +116,7 @@ define([
         }
 
         /*
-        // TODO: Implement
-        var result = {
+        var structure = {
             coords: {
                 latitude: 52.3936253,
                 longitude: 13.1295858,
@@ -115,8 +128,6 @@ define([
             },
             timestamp: 123456789 // DOMTimeStamp, absolute or relative number of milliseconds
         };
-
-        finish(result);
         */
     };
 
