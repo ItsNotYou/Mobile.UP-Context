@@ -14,15 +14,7 @@ define([
         );
         stmt.timestamp = moment().toISOString();
 
-        // TODO: Add to send queue?
-        xapi.ADL.XAPIWrapper.sendStatement(stmt, function(err, res, body) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-
-            console.log("[" + body.id + "]: " + res.status + " - " + res.statusText);
-        });
+        this._sendStatement(stmt);
     };
 
     return StatementSender;
