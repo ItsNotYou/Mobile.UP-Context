@@ -35,19 +35,23 @@ define([
      * @returns jQuery promise
      */
     StatementSender.prototype._sendStatement = function(stmt) {
+        // TODO: Refine send queue
+        var sendAgain = function(stmt, deferred) {
+            xapi.ADL.XAPIWrapper.sendStatement(stmt, function(err, res, body) {
+                if (err) {
+                    // See res.status for details on failure
+                    // 400 bei falschem Request
+                    // 0 bei lokalem technischem Problem (keine Verbindung)
+                    console.log("Send error: " + res.status + " / " + JSON.stringify(err));
+                    sendAgain(stmt, deferred);
+                } else {
+                    result.resolve(body.id);
+                }
+            });
+        };
+
         var result = $.Deferred();
-
-        // TODO: Add to send queue?
-        xapi.ADL.XAPIWrapper.sendStatement(stmt, function(err, res, body) {
-            if (err) {
-                if (console.error) console.error(err);
-                result.reject(err);
-            } else {
-                console.log("[" + body.id + "]: " + res.status + " - " + res.statusText);
-                result.resolve(body.id);
-            }
-        });
-
+        sendAgain(stmt, result);
         return result.promise();
     };
 
