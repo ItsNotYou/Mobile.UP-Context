@@ -10,11 +10,13 @@ define([
         return values[0];
     };
 
+    if (contactJS.ContextInformation.prototype.isDifferentFromLastValue) throw "Extension failed";
     contactJS.ContextInformation.prototype.isDifferentFromLastValue = function(key, availableContext) {
         var value = getContextValue(this, availableContext);
         return change.isDifferentFromLastValue(key, value.getValue()) && value.isKnown();
     };
 
+    if (contactJS.ContextInformation.prototype.updateLastValue) throw "Extension failed";
     contactJS.ContextInformation.prototype.updateLastValue = function(key, availableContext) {
         var value = getContextValue(this, availableContext).getValue();
         var former = change.updateLastValue(key, value);
