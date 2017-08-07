@@ -6,8 +6,9 @@ define([
 		'backbone',
 		'Session',
 		'pmodules/options/options.login',
+		'AppEvents',
 		'utils'
-], function($, _, Backbone, Session, login, utils){
+], function($, _, Backbone, Session, login, appEvents, utils){
 	var rendertmpl = _.partial(utils.rendertmpl, _, "js/pmodules/options");
 
 	function TimerHelper(model, view) {
@@ -137,6 +138,7 @@ define([
 				}).progress(function(login) {
 					$('#username').val(login.username);
 				}).done(function(session) {
+					appEvents.trigger("logged_in");
 					that.timerHelper.unsetFailureTimer();
 
 					if(that.model.get('up.session.redirectFrom')){
@@ -194,8 +196,11 @@ define([
 		
 		logout: function(ev){
 			ev.preventDefault();
+			
 			this.model.unsetLogin();
 			this.model.clearPrivateCache();
+			appEvents.trigger("logged_in");
+
 			app.route('');
 		},
 		
