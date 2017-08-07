@@ -25,7 +25,7 @@ define([
             id: "0a917528-befb-470e-bfa4-96e0580d6cdf",
             relatedContextInformation: [context.location],
             condition: function(R) {
-                var older = context.location.isOlderThan("DEBUG_USER_LOCATION", 10*1000, this);
+                var older = context.location.isOlderThan("DEBUG_USER_LOCATION", 60*1000, this);
                 var different = context.location.isDifferentFromLastValue("DEBUG_USER_LOCATION", this);
                 R.when(older || different);
             },
