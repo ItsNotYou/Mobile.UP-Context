@@ -8,6 +8,7 @@ define([
 	'utils',
 	'fastclick',
 	'Session',
+	'AppEvents',
 	'history',
 	'viewContainer',
 	'ContextDetector',
@@ -15,7 +16,7 @@ define([
 	'jquerymobile',
 	'datebox',
 	'LocalStore'
-	], function($, _, Backbone, BackboneMVC, _str, utils, FastClick, Session, customHistory, ViewHelper, ContextDetector, controllerLoader){
+	], function($, _, Backbone, BackboneMVC, _str, utils, FastClick, Session, appEvents, customHistory, ViewHelper, ContextDetector, controllerLoader){
 		var viewContainer = ViewHelper.viewContainer;
 		viewContainer.initialize();
 		var pageContainer = ViewHelper.pageContainer;
@@ -57,14 +58,8 @@ define([
   					document.addEventListener("deviceready", onDeviceReady, false);
 				});
 
-				var startContextDetector = function() {
-					var session = new Session();
-					if (session.get('up.session.authenticated')) {
-						console.log("Starte ContextDetector");
-						new ContextDetector().start();
-					} else {
-						console.log("Starte ContextDetector NICHT");
-					}
+				var sendAppStarted = function() {
+					appEvents.trigger("app_started");
 				};
 
 				/**
@@ -87,7 +82,7 @@ define([
     					}
     				}, false);
 
-					$(startContextDetector);
+					$(sendAppStarted);
 				}
 
 				// Initialize Backbone override
@@ -106,7 +101,7 @@ define([
 				//Backbone URL-Routing-Funktion starten
 				customHistory.startTracking(baseUrl);
 
-				$(startContextDetector);
+				$(sendAppStarted);
 
 				this._gotoEntryPoint();
 			},
