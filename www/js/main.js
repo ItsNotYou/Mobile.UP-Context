@@ -23,6 +23,7 @@ require.config({
         'fastclick': 'vendor/fastclick.min',
         'hammerjs': 'vendor/hammer',
         'uri': 'vendor/src',
+        'AppEvents': 'lib/AppEvents',
         'turf': 'vendor/turf.min',
         // Testing frameworks
         'jasmine': 'https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.7.0/jasmine',
