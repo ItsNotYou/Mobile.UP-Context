@@ -1964,7 +1964,7 @@ define('storage',['contextInformation', 'contextInformationList', 'retrievalResu
 				if(!window.openDatabase) {
 					this._parent.log('Databases are not supported in this browser.');
 				}else{
-					this._storage = window.openDatabase(name, "1.0", "DB_" + name, 1024*1024*1024);
+					this._storage = window.openDatabase(name, "1.0", "DB_" + name, 5*1024*1024);
 					this._parent.log('I will initialize storage with name '+name+".");
 				}
 			};

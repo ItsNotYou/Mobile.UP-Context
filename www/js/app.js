@@ -82,6 +82,7 @@ define([
     					}
     				}, false);
 
+					console.log("STARTING FOR APP");
 					$(sendAppStarted);
 				}
 
@@ -101,7 +102,10 @@ define([
 				//Backbone URL-Routing-Funktion starten
 				customHistory.startTracking(baseUrl);
 
-				$(sendAppStarted);
+				if (!window.cordova) {
+					console.log("STARTING FOR BROWSER");
+					$(sendAppStarted);
+				}
 
 				this._gotoEntryPoint();
 			},
