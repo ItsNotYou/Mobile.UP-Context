@@ -32,8 +32,6 @@ define([
             var end = moment(nowRaw).subtract(10, "minutes");
 
             result = runningCoursesFilter.filterRunningCourses(begin, end, nowRaw, attendedCourses);
-
-            console.log("Currently running courses (fuzzy)", result);
         }
 
         var response = outContextInformation.getItems()[0];
