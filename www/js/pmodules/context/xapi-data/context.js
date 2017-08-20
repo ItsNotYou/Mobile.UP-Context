@@ -30,6 +30,20 @@ define([], function () {
                     ]
                 }
             };
+        },
+        statement_source: function() {
+            return {
+                "contextActivities": {
+                    "category": [
+                        {
+                            "id": "http://mobileup.uni-potsdam.de/",
+                            "definition": {
+                                "type": "http://id.tincanapi.com/activitytype/source"
+                            }
+                        }
+                    ]
+                }
+            }
         }
     }
 });
