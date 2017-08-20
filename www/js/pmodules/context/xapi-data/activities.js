@@ -121,6 +121,8 @@ define(['ADL'], function (xapi) {
          * @param event
          * @param event.semesterSC
          * @param event.courseId
+         * @param event.eventId
+         * @param event.today
          * @param event.startTime
          * @param event.lecturers
          * @param event.lecturers.lecturer
@@ -132,11 +134,18 @@ define(['ADL'], function (xapi) {
                 throw "Event semester required";
             }
             if (!event.courseId) {
-                throw "Event header id required";
+                throw "Course id required";
+            }
+            if (!event.eventId) {
+                throw "Event id required";
+            }
+            if (!event.today) {
+                throw "Current day required";
             }
 
+            // TODO: add parent course
             return {
-                "id": "http://xapi.uni-potsdam.de/event/" + event.semesterSC + "/" + event.courseId,
+                "id": "http://xapi.uni-potsdam.de/event/" + event.semesterSC + "/" + event.courseId + "/" + event.eventId + "/" + event.today,
                 "definition": {
                     "name": {
                         "en-US": event.courseName ? event.courseName : "event"

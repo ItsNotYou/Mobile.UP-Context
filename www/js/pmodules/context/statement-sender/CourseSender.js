@@ -38,8 +38,6 @@ define([
         );
         stmt.context = context.attendance_simple();
 
-        console.log(stmt);
-
         this._sendStatement(stmt);
     };
 
@@ -81,6 +79,36 @@ define([
 
         // Set event start time
         stmt.timestamp = createTimestamp(courseAndEvent.today, courseAndEvent.endTime);
+
+        this._sendStatement(stmt);
+    };
+
+    StatementSender.prototype.sendCourseJoined = function(courseAndEvent, now) {
+        // Create statement
+        var stmt = new xapi.ADL.XAPIStatement(
+            this._agent,
+            verbs.joined,
+            activities.courseEvent(courseAndEvent)
+        );
+        stmt.context = context.attendance_detailed();
+
+        // Set current time
+        stmt.timestamp = now;
+
+        this._sendStatement(stmt);
+    };
+
+    StatementSender.prototype.sendCourseLeft = function(courseAndEvent, now) {
+        // Create statement
+        var stmt = new xapi.ADL.XAPIStatement(
+            this._agent,
+            verbs.left,
+            activities.courseEvent(courseAndEvent)
+        );
+        stmt.context = context.attendance_detailed();
+
+        // Set current time
+        stmt.timestamp = now;
 
         this._sendStatement(stmt);
     };

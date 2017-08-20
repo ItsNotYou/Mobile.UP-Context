@@ -10,6 +10,11 @@ define([
         return values[0];
     };
 
+    if (contactJS.ContextInformation.prototype.getCurrentValue) throw "Extension failed";
+    contactJS.ContextInformation.prototype.getCurrentValue = function(availableContext) {
+        return getContextValue(this, availableContext).getValue();
+    };
+
     if (contactJS.ContextInformation.prototype.isOlderThan) throw "Extension failed";
     contactJS.ContextInformation.prototype.isOlderThan = function(key, age, availableContext) {
         var value = getContextValue(this, availableContext);

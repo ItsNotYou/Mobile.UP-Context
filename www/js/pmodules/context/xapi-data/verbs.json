@@ -40,5 +40,17 @@
     "display": {
       "en-US": "experienced"
     }
+  },
+  "joined":{
+    "id": "http://activitystrea.ms/schema/1.0/join",
+    "display": {
+      "en-US": "joined"
+    }
+  },
+  "left":{
+    "id": "http://activitystrea.ms/schema/1.0/leave",
+    "display": {
+      "en-US": "left"
+    }
   }
 }
