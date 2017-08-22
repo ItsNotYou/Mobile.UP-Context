@@ -58,9 +58,9 @@ define([
   					document.addEventListener("deviceready", onDeviceReady, false);
 				});
 
-				var sendAppStarted = function() {
+				function sendAppStarted() {
 					appEvents.trigger("app_started");
-				};
+				}
 
 				/**
 				 *	functions get exectuted when device is ready and handles hiding of splashscreen and backButton navigation
