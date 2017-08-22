@@ -117,7 +117,7 @@
     <content src="index.html" />
 
     <!-- Background geo location -->
-    <plugin name="cordova-background-geolocation-lt">
+    <plugin name="cordova-background-geolocation-lt" spec="^2.8.2">
         <!-- iOS only -->
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Background location-tracking is required" />
         <variable name="LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION" value="Background location-tracking is required" />
@@ -125,6 +125,9 @@
         <!-- Android only -->
         <variable name="LICENSE" value="YOUR_LICENSE_KEY" />
     </plugin>
+
+    <!-- Device language -->
+    <plugin name="cordova-plugin-globalization" spec="^1.0.7" />
 
     <!-- Remaining plugins -->
     <plugin name="cordova-plugin-inappbrowser" spec="^1.4.0" />
