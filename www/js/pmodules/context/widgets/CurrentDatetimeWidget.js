@@ -27,7 +27,7 @@ define([
     };
 
     CurrentDatetimeWidget.prototype.queryGenerator = function(callback) {
-        var result = moment().format();
+        var result = moment().toISOString();
 
         var response = new contactJS.ContextInformationList();
         response.put(this.getOutputContextInformation().getItems()[0].setValue(result));
