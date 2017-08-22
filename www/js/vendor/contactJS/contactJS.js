@@ -2123,7 +2123,7 @@ define('storage',['contextInformation', 'contextInformationList', 'retrievalResu
 			 * @param {?function} callback For additional actions, if an asynchronous function is used.
 			 */
 			Storage.prototype.retrieveContextInformation = function(tableName, callback){
-				console.log("retrieve contextual information from "+tableName);
+				if (this._verbose) console.log("retrieve contextual information from "+tableName);
 
 				if(this._storage){
 					var self = this;
@@ -5626,7 +5626,7 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 			 */
 			Discoverer.prototype.getComponentsForUnsatisfiedContextInformation = function(aggregatorId, unsatisfiedContextInformation, all, componentTypes){
 				// the discoverer gets a list of contextual information to satisfy
-				console.log('Discoverer: I will look for components that satisfy the following contextual information: '+unsatisfiedContextInformation.getItems()+'.' );
+				if (this._verbose) console.log('Discoverer: I will look for components that satisfy the following contextual information: '+unsatisfiedContextInformation.getItems()+'.' );
 				// look at all the already registered components
 				this._getRegisteredComponentsForUnsatisfiedContextInformation(aggregatorId, unsatisfiedContextInformation, all, componentTypes);
 				// look at all unregistered components
@@ -5644,37 +5644,37 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 			 */
 			Discoverer.prototype._getRegisteredComponentsForUnsatisfiedContextInformation = function(aggregatorId, unsatisfiedContextInformation, all, componentTypes) {
 				var theAggregator = this.getAggregator(aggregatorId);
-				console.log("Discoverer: Let's look at my registered components.");
+				if (this._verbose) console.log("Discoverer: Let's look at my registered components.");
 
 				var relevantComponents = this.getRegisteredComponentsByContextInformation(unsatisfiedContextInformation, all, componentTypes);
-				console.log("Discoverer: I found " + relevantComponents.length + " registered component(s) that might satisfy the requested contextual information.");
+				if (this._verbose) console.log("Discoverer: I found " + relevantComponents.length + " registered component(s) that might satisfy the requested contextual information.");
 
 				//iterate over the found components
 				for(var index in relevantComponents) {
 					var theComponent = relevantComponents[index];
-					console.log("Discoverer: Let's look at component "+theComponent.getName()+".");
+					if (this._verbose) console.log("Discoverer: Let's look at component "+theComponent.getName()+".");
 
 					// if the component was added before, ignore it
 					if (!theAggregator._hasComponent(theComponent.getId())) {
 						// if component is a widget and it wasn't added before, subscribe to its callbacks
 						if (theComponent instanceof Widget) {
 							theAggregator.addWidgetSubscription(theComponent);
-							console.log("Discoverer: I found "+theComponent.getName()+" and the Aggregator did subscribe to it.");
+							if (this._verbose) console.log("Discoverer: I found "+theComponent.getName()+" and the Aggregator did subscribe to it.");
 							this._removeContextInformationSatisfiedByWidget(aggregatorId, theComponent, unsatisfiedContextInformation);
 						} else if (theComponent instanceof Interpreter) { // if the component is an interpreter and all its input contextual information can be satisfied, add the interpreter
-							console.log("Discoverer: It's an Interpreter.");
+							if (this._verbose) console.log("Discoverer: It's an Interpreter.");
 
 							if (this._checkInterpreterInputContextInformation(aggregatorId, theComponent)) {
 								// remove satisfied contextual information
 								this._removeContextInformationSatisfiedByInterpreter(aggregatorId, theComponent, unsatisfiedContextInformation);
 							} else {
-								console.log("Discoverer: I found a registered Interpreter but I couldn't satisfy the required contextual information.");
+								if (this._verbose) console.log("Discoverer: I found a registered Interpreter but I couldn't satisfy the required contextual information.");
 								for (var j in theComponent.getInputContextInformation().getItems()) {
-									console.log("Discoverer: It is missing " + theComponent.getInputContextInformation().getItems()[j] + ".");
+									if (this._verbose) console.log("Discoverer: It is missing " + theComponent.getInputContextInformation().getItems()[j] + ".");
 								}
 							}
 						} else {
-							console.log("Discoverer: It seems that the component was added before.");
+							if (this._verbose) console.log("Discoverer: It seems that the component was added before.");
 						}
 					}
 				}
@@ -5689,7 +5689,7 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 			 */
 			Discoverer.prototype._getUnregisteredComponentsForUnsatisfiedContextInformation = function(aggregatorId, unsatisfiedContextInformation) {
 				var theAggregator = this.getAggregator(aggregatorId);
-				console.log("Discoverer: Let's look at the unregistered components.");
+				if (this._verbose) console.log("Discoverer: Let's look at the unregistered components.");
 
 				//check all Widget's output contextual information
 				for(var widgetIndex in this._unregisteredWidgets){
@@ -5705,10 +5705,10 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 
 							for(var tempWidgetOutListIndex in tempWidgetOutList.getItems()) {
 								if (theUnsatisfiedContextInformation.isKindOf(tempWidgetOutList.getItems()[tempWidgetOutListIndex])) {
-									console.log("Discoverer: I have found an unregistered "+theWidget.name+".");
+									if (this._verbose) console.log("Discoverer: I have found an unregistered "+theWidget.name+".");
 									var newWidget = new theWidget(this, tempWidgetOutList);
 									theAggregator.addWidgetSubscription(newWidget);
-									console.log("Discoverer: I registered "+theWidget.name+" and the Aggregator subscribed to it.");
+									if (this._verbose) console.log("Discoverer: I registered "+theWidget.name+" and the Aggregator subscribed to it.");
 									// remove satisfied contextual information
 									this._removeContextInformationSatisfiedByWidget(aggregatorId, newWidget, unsatisfiedContextInformation);
 								}
@@ -5730,17 +5730,17 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 
 							for (var tempOutputContextInformationIndex in tempOutList.getItems()) {
 								if (theUnsatisfiedContextInformation.isKindOf(tempOutList.getItems()[tempOutputContextInformationIndex])) {
-									console.log("Discoverer: I have found an unregistered "+theInterpreter.name+" that might satisfy the requested contextual information.");
+									if (this._verbose) console.log("Discoverer: I have found an unregistered "+theInterpreter.name+" that might satisfy the requested contextual information.");
 
 									//if an interpreter can satisfy the ContextInformation, check if the inContextInformation are satisfied
 									if (this._checkInterpreterInputContextInformation(aggregatorId, theInterpreter)) {
 										var newInterpreter = new theInterpreter(this, tempInList, tempOutList);
 										//theAggregator.addWidgetSubscription(newInterpreter);
-										console.log("Discoverer: I registered the Interpreter \""+theInterpreter.name+"\" .");
+										if (this._verbose) console.log("Discoverer: I registered the Interpreter \""+theInterpreter.name+"\" .");
 										// remove satisfied contextual information
 										this._removeContextInformationSatisfiedByInterpreter(aggregatorId, newInterpreter, unsatisfiedContextInformation);
 									} else {
-										console.log("Discoverer: I found an unregistered Interpreter but I couldn't satisfy the required contextual information.");
+										if (this._verbose) console.log("Discoverer: I found an unregistered Interpreter but I couldn't satisfy the required contextual information.");
 									}
 								}
 							}
@@ -5769,21 +5769,21 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 				for (var contextInformationIdentifier in contextInformation) {
 					// get the contextual information
 					var theContextInformation = contextInformation[contextInformationIdentifier];
-					console.log("Discoverer: The Interpreter needs the contextual information: "+theContextInformation.toString(true)+".");
+					if (this._verbose) console.log("Discoverer: The Interpreter needs the contextual information: "+theContextInformation.toString(true)+".");
 					// if required contextual information is not already satisfied by the aggregator search for components that do
 					if (!theAggregator.doesSatisfyKindOf(theContextInformation)) {
-						console.log("Discoverer: The Aggregator doesn't satisfy "+theContextInformation.toString(true)+", but I will search for components that do.");
+						if (this._verbose) console.log("Discoverer: The Aggregator doesn't satisfy "+theContextInformation.toString(true)+", but I will search for components that do.");
 						var newContextInformationList = new ContextInformationList();
 						newContextInformationList.put(theContextInformation);
 						this.getComponentsForUnsatisfiedContextInformation(aggregatorId, newContextInformationList, false, [Widget, Interpreter]);
 						// if the contextual information still can't be satisfied drop the interpreter
 						if (!theAggregator.doesSatisfyKindOf(theContextInformation)) {
-							console.log("Discoverer: I couldn't find a component to satisfy "+theContextInformation.toString(true)+". Dropping interpreter.");
+							if (this._verbose) console.log("Discoverer: I couldn't find a component to satisfy "+theContextInformation.toString(true)+". Dropping interpreter.");
 							canSatisfyInContextInformation = false;
 							break;
 						}
 					} else {
-						console.log("Discoverer: It seems that the Aggregator already satisfies the contextual information "+theContextInformation.toString(true)+". Will move on.");
+						if (this._verbose) console.log("Discoverer: It seems that the Aggregator already satisfies the contextual information "+theContextInformation.toString(true)+". Will move on.");
 					}
 				}
 
@@ -5805,7 +5805,7 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 					var theContextInformation = contextInformation[contextInformationIndex];
 					// add the contextual information type to the aggregator's list of handled contextual information
 					if (!theAggregator.getOutputContextInformation().containsKindOf(theContextInformation)) theAggregator.addOutputContextInformation(theContextInformation);
-					console.log("Discoverer: The Aggregator can now satisfy contextual information "+theContextInformation.toString(true)+" with the help of "+theWidget.getName()+".");
+					if (this._verbose) console.log("Discoverer: The Aggregator can now satisfy contextual information "+theContextInformation.toString(true)+" with the help of "+theWidget.getName()+".");
 					unsatisfiedContextInformation.removeContextInformationOfKind(theContextInformation);
 				}
 			};
@@ -5828,7 +5828,7 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 						var theUnsatisfiedContextInformation = unsatisfiedContextInformation.getItems()[unsatisfiedContextInformationIndex];
 						if (theUnsatisfiedContextInformation.isKindOf(theContextInformation)) {
 							if (!theAggregator.getOutputContextInformation().containsKindOf(theContextInformation)) theAggregator.addOutputContextInformation(theContextInformation);
-							console.log("Discoverer: The Aggregator can now satisfy contextual information "+theContextInformation.toString(true)+" with the help of "+theInterpreter.getName()+".");
+							if (this._verbose) console.log("Discoverer: The Aggregator can now satisfy contextual information "+theContextInformation.toString(true)+" with the help of "+theInterpreter.getName()+".");
 							theAggregator._interpretations.push(new Interpretation(theInterpreter.getId(), theInterpreter.getInputContextInformation(), new ContextInformationList().withItems([theUnsatisfiedContextInformation])));
 						}
 					}
@@ -5893,13 +5893,13 @@ define('discoverer',['contextInformation', 'contextInformationList', 'translatio
 								if (typeof scope[objectComponent] !== "undefined") {
 									scope = scope[objectComponent]
 								} else {
-									console.log("Discoverer: A component requires "+theRequiredObject+", but it's not available.");
+									if (this._verbose) console.log("Discoverer: A component requires "+theRequiredObject+", but it's not available.");
 									return false;
 								}
 							}
 						} else {
 							if (typeof window[theRequiredObject] === "undefined") {
-								console.log("Discoverer: A component requires "+theRequiredObject+", but it's not available.");
+								if (this._verbose) console.log("Discoverer: A component requires "+theRequiredObject+", but it's not available.");
 								return false;
 							}
 						}
