@@ -199,7 +199,7 @@ define([
 			
 			this.model.unsetLogin();
 			this.model.clearPrivateCache();
-			appEvents.trigger("logged_in");
+			appEvents.trigger("logged_out");
 
 			app.route('');
 		},
