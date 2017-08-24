@@ -3,7 +3,8 @@ define([
     './CurrentDatetimeWidget',
     './DeviceInfoWidget',
     './LocationWidget',
-    './PulsCoursesWidget'
+    './PulsCoursesWidget',
+    './RegisteredAccountsWidget'
 ], function() {
     return arguments;
 });

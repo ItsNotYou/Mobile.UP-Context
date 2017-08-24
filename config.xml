@@ -129,6 +129,9 @@
     <!-- Device language -->
     <plugin name="cordova-plugin-globalization" spec="^1.0.7" />
 
+    <!-- Device accounts -->
+    <plugin name="cordova-device-accounts-npm" spec="https://github.com/ItsNotYou/cordova-device-accounts.git" />
+
     <!-- Remaining plugins -->
     <plugin name="cordova-plugin-inappbrowser" spec="^1.4.0" />
     <plugin name="cordova-plugin-dialogs" spec="^1.2.1" />

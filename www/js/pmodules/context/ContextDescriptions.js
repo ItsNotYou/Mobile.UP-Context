@@ -47,6 +47,11 @@ define([
             name: "CI_NEAR_BUILDINGS",
             type: "ARRAY",
             parameterList: [["CP_UNIT", "OBJECT", "BUILDING"]]
+        },
+        CI_REGISTERED_ACCOUNTS: {
+            name: "CI_REGISTERED_ACCOUNTS",
+            type: "ARRAY",
+            parameterList: [["CP_UNIT", "OBJECT", "ACCOUNT"]]
         }
     };
 
