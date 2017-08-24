@@ -1,7 +1,10 @@
 define(['ADL'], function (xapi) {
 
     var serviceProviders = {
-        "facebook": "http://www.facebook.com/"
+        "email": "http://xapi.uni-potsdam.de/provider/email",
+        "facebook": "https://www.facebook.com/",
+        "twitter": "https://twitter.com/",
+        "threema": "https://threema.ch/"
     };
 
     return {

@@ -17,7 +17,8 @@ define([
 
     var context = {
         deviceInfo: ci.get("CI_DEVICE_INFO"),
-        attendedCourses: ci.get("CI_ATTENDED_COURSES")
+        attendedCourses: ci.get("CI_ATTENDED_COURSES"),
+        serviceProviders: ci.get("CI_SERVICE_PROVIDER")
     };
 
     return [
@@ -48,6 +49,27 @@ define([
                 var sender = new StatementSender();
                 _.each(courses, function(course) {
                     sender.sendAttendedCourse(course);
+                });
+
+                R.next();
+            }
+        },
+        {
+            id: "f524046f-c603-4991-a8d8-8ab0262e8331",
+            relatedContextInformation: [context.serviceProviders],
+            condition: function(R) {
+                R.when(context.serviceProviders.isDifferentFromLastValue("PROFILE_CI_SERVICE_PROVIDER", this));
+            },
+            consequence: function(R) {
+                var value = context.serviceProviders.updateLastValue("PROFILE_CI_SERVICE_PROVIDER", this);
+                var providers = newCourses(value.former, value.current);
+
+                var sender = new StatementSender();
+                _.each(providers, function(provider) {
+                    sender.sendServiceLogin({
+                        provider: provider.provider,
+                        identity: provider.account
+                    });
                 });
 
                 R.next();

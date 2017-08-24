@@ -15,7 +15,7 @@ define([
      */
 
     /**
-     * A ServiceProvider account that identifies a user
+     * A ServiceProvider account that identifies a user. Currently, the following providers are known: email, facebook, twitter, threema
      * @typedef {Object} ServiceProvider
      * @property {string} provider - provider type, e.g. facebook
      * @property {string} account - account name, e.g. some mail or id
