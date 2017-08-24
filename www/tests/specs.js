@@ -1,3 +1,4 @@
 define([
-    './context/interpreters/NearBuildings'
+    './context/interpreters/NearBuildings',
+    './context/interpreters/ServiceProvider'
 ], function() {});

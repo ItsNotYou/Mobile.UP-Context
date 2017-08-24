@@ -52,6 +52,11 @@ define([
             name: "CI_REGISTERED_ACCOUNTS",
             type: "ARRAY",
             parameterList: [["CP_UNIT", "OBJECT", "ACCOUNT"]]
+        },
+        CI_SERVICE_PROVIDER: {
+            name: "CI_SERVICE_PROVIDER",
+            type: "ARRAY",
+            parameterList: [["CP_UNIT", "OBJECT", "SERVICE_PROVIDER"]]
         }
     };
 
