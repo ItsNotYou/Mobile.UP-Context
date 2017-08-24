@@ -4,28 +4,6 @@ define([
     'ContextDescriptions'
 ], function(_, contactJS, ci) {
 
-    // Finds anystring@anystring.any with false positives like test@test@test.de
-    var emailTester = /\S+@\S+\.\S+/;
-
-    /**
-     * An Android account as given by the cordova account plugin
-     * @typedef {Object} Account
-     * @property {string} type - account type, e.g. com.facebook.messenger
-     * @property {string} name - account name, e.g. some mail or id
-     */
-
-    /**
-     * Finds all email addresses in name fields
-     * @param {Account[]} accounts
-     */
-    var findEmails = function(accounts) {
-        return _.chain(accounts)
-            .pluck("name")
-            .filter(function(name) { return emailTester.test(name); } )
-            .uniq()
-            .value();
-    };
-
     var RegisteredAccountsWidget = function(discoverer) {
         contactJS.Widget.call(this, discoverer);
         this.name = "RegisteredAccountsWidget";
