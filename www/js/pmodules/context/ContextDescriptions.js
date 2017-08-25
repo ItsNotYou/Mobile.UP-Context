@@ -57,6 +57,11 @@ define([
             name: "CI_SERVICE_PROVIDER",
             type: "ARRAY",
             parameterList: [["CP_UNIT", "OBJECT", "SERVICE_PROVIDER"]]
+        },
+        CI_DEVICE_PHONE_NUMBERS: {
+            name: "CI_DEVICE_PHONE_NUMBERS",
+            type: "ARRAY",
+            parameterList: [["CP_UNIT", "OBJECT", "PHONE_NUMBERS"]]
         }
     };
 

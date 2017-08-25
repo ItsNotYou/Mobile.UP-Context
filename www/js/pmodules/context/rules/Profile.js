@@ -16,7 +16,7 @@ define([
     };
 
     var context = {
-        deviceInfo: ci.get("CI_DEVICE_INFO"),
+        devicePhoneNumbers: ci.get("CI_DEVICE_PHONE_NUMBERS"),
         attendedCourses: ci.get("CI_ATTENDED_COURSES"),
         serviceProviders: ci.get("CI_SERVICE_PROVIDER")
     };
@@ -24,15 +24,16 @@ define([
     return [
         {
             id: "c7c7ba19-08e0-44d3-b91d-7b7b717484ed",
-            relatedContextInformation: [context.deviceInfo],
+            relatedContextInformation: [context.devicePhoneNumbers],
             condition: function(R) {
-                R.when(context.deviceInfo.isDifferentFromLastValue("PROFILE_CI_DEVICE_INFO", this));
+                R.when(context.devicePhoneNumbers.isDifferentFromLastValue("PROFILE_CI_DEVICE_PHONE_NUMBERS", this));
             },
             consequence: function(R) {
-                var value = context.deviceInfo.updateLastValue("PROFILE_CI_DEVICE_INFO", this);
+                var value = context.devicePhoneNumbers.updateLastValue("PROFILE_CI_DEVICE_PHONE_NUMBERS", this);
 
-                new StatementSender().sendDeviceDetails(value.current);
-                console.log("CI_DEVICE_INFO rule fired");
+                new StatementSender().sendDeviceDetails({
+                    phoneNumbers: value.current
+                });
                 R.next();
             }
         },

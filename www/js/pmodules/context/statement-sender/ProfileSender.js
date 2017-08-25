@@ -25,7 +25,7 @@ define([
         var stmt = new xapi.ADL.XAPIStatement(
             this._agent,
             verbs.used,
-            activities.device(device.uuid, extensions)
+            activities.device(/*device.uuid*/"uuid", extensions)
         );
 
         this._sendStatement(stmt);
