@@ -67,6 +67,11 @@ define([
             name: "CI_DEVICE_LANGUAGE",
             type: "LANGUAGE",
             parameterList: [["CP_UNIT", "STRING", "BCP-47"]]
+        },
+        CI_DEVICE_UUID: {
+            name: "CI_DEVICE_UUID",
+            type: "UUID",
+            parameterList: [["CP_UNIT", "STRING", "RFC-4122"], ["CP_UNIT", "VERSION", "v4"]]
         }
     };
 
