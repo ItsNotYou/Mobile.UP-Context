@@ -62,6 +62,11 @@ define([
             name: "CI_DEVICE_PHONE_NUMBERS",
             type: "ARRAY",
             parameterList: [["CP_UNIT", "OBJECT", "PHONE_NUMBERS"]]
+        },
+        CI_DEVICE_LANGUAGE: {
+            name: "CI_DEVICE_LANGUAGE",
+            type: "LANGUAGE",
+            parameterList: [["CP_UNIT", "STRING", "BCP-47"]]
         }
     };
 

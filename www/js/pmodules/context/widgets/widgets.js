@@ -1,6 +1,7 @@
 define([
     './AvailableRoomsWidget',
     './CurrentDatetimeWidget',
+    './DeviceLanguageWidget',
     './DevicePhoneNumbersWidget',
     './LocationWidget',
     './PulsCoursesWidget',
