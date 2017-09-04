@@ -3,11 +3,6 @@ define([
 ], function (contactJS) {
 
     var contextDescriptions = {
-        CI_DEVICE_INFO: {
-            name: "CI_DEVICE_INFO",
-            type: "OBJECT",
-            parameterList: []
-        },
         CI_ATTENDED_COURSES: {
             name: "CI_ATTENDED_COURSES",
             type: "ARRAY",
