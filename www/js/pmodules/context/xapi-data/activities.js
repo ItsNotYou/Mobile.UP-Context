@@ -1,4 +1,7 @@
-define(['ADL'], function (xapi) {
+define([
+    'ADL',
+    'moment'
+], function (xapi, moment) {
 
     var serviceProviders = {
         "email": "http://xapi.uni-potsdam.de/provider/email",
@@ -172,6 +175,48 @@ define(['ADL'], function (xapi) {
                         "en-US": "Represents a keepalive message within an application."
                     },
                     "type": "http://activitystrea.ms/schema/1.0/alert"
+                },
+                "objectType": "Activity"
+            }
+        },
+        semester: function(semesterSC) {
+            var semesterName = undefined;
+            var semesterStart = undefined;
+            var semesterEnd = undefined;
+
+            if (typeof semesterSC === "string" && semesterSC.length === 5) {
+                var year = semesterSC.substr(0, 4);
+                var nextYear = parseInt(year) + 1;
+                var semester = semesterSC.substr(4, 1);
+
+                if (semester === "1") {
+                    semesterName = "SoSe " + year;
+                    semesterStart = moment(year + "-04-15").toISOString();
+                    semesterEnd = moment(year + "-09-15").toISOString();
+                } else {
+                    semesterName = "WiSe " + year;
+                    semesterStart = moment(year + "-10-15").toISOString();
+                    semesterEnd = moment(nextYear + "-03-15").toISOString();
+                }
+            }
+
+            return {
+                "id": "http://xapi.uni-potsdam.de/semester/" + semesterSC,
+                "definition": {
+                    "name": {
+                        "de-DE": semesterName
+                    },
+                    "description": {
+                        "en-US": "Represents a semester at an university."
+                    },
+                    "type": "http://id.tincanapi.com/activitytype/semester",
+                    "extensions": {
+                        "http://id.tincanapi.com/extension/semester": {
+                            "id": semesterSC,
+                            "start": semesterStart,
+                            "end": semesterEnd
+                        }
+                    }
                 },
                 "objectType": "Activity"
             }

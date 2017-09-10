@@ -1,4 +1,6 @@
-define([], function () {
+define([
+    './activities'
+], function (activities) {
 
     return {
         attendance_simple: function () {
@@ -41,6 +43,15 @@ define([], function () {
                                 "type": "http://id.tincanapi.com/activitytype/source"
                             }
                         }
+                    ]
+                }
+            }
+        },
+        semester_activity: function(semesterSC) {
+            return {
+                "contextActivities": {
+                    "other": [
+                        activities.semester(semesterSC)
                     ]
                 }
             }

@@ -25,7 +25,7 @@ define([
         this._agent = new xapi.ADL.XAPIStatement.Agent('mailto:' + session.get("up.session.username") + '@uni-potsdam.de', session.get("up.session.username"));
     };
 
-    var deepMerge = function(target, source) {
+    StatementSender.prototype._deepMerge = function(target, source) {
         // Skip strings etc.
         if (typeof target !== "object" || typeof source !== "object") {
             return;
@@ -40,7 +40,7 @@ define([
         // Deep merge objects
         for (var property in source) {
             if (target[property]) {
-                deepMerge(target[property], source[property]);
+                this._deepMerge(target[property], source[property]);
             } else {
                 target[property] = source[property];
             }
@@ -67,11 +67,12 @@ define([
         var result = $.Deferred();
 
         // Add statement source
-        deepMerge(statement, {"context": context.statement_source()});
+        this._deepMerge(statement, {"context": context.statement_source()});
 
         // Add device language
+        var that = this;
         getLanguage(function(language) {
-            deepMerge(statement, {"context": {"language": language}});
+            that._deepMerge(statement, {"context": {"language": language}});
             result.resolve(statement);
         }, function() {
             result.resolve(statement);

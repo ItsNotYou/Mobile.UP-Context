@@ -36,7 +36,8 @@ define([
             verbs.attended,
             activities.event(course)
         );
-        stmt.context = context.attendance_simple();
+        this._deepMerge(stmt, {"context": context.attendance_simple()});
+        this._deepMerge(stmt, {"context": context.semester_activity(course.semesterSC)});
 
         this._sendStatement(stmt);
     };
