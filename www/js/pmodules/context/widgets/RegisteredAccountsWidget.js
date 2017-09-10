@@ -32,12 +32,16 @@ define([
             this._sendResponse(response, callback);
         }, this);
 
-        cordova.plugins.DeviceAccounts.get(function(accounts) {
-            finish(accounts);
-        }, function(error) {
-            console.log('Fail to retrieve accounts, details on exception:' + JSON.stringify(error));
+        if (window.cordova) {
+            cordova.plugins.DeviceAccounts.get(function(accounts) {
+                finish(accounts);
+            }, function(error) {
+                console.log('Fail to retrieve accounts, details on exception:' + JSON.stringify(error));
+                finish(contactJS.ContextInformation.VALUE_UNKNOWN);
+            });
+        } else {
             finish(contactJS.ContextInformation.VALUE_UNKNOWN);
-        });
+        }
     };
 
     return RegisteredAccountsWidget;
