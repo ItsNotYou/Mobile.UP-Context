@@ -36,38 +36,42 @@ define([
             finish(contactJS.ContextInformation.VALUE_UNKNOWN);
         }, this);
 
-        // Step 4: Filter data
-        var filterData = function(cards) {
-            cards.push({phoneNumber: "123456789"});
+        if (window.cordova) {
+            // Step 4: Filter data
+            var filterData = function(cards) {
+                cards.push({phoneNumber: "123456789"});
 
-            var phoneNumbers = _.chain(cards)
-                .pluck("phoneNumber")
-                .filter(function(number) { return number})
-                .map(function(number) { return "+49" + number; })
-                .value();
+                var phoneNumbers = _.chain(cards)
+                    .pluck("phoneNumber")
+                    .filter(function(number) { return number})
+                    .map(function(number) { return "+49" + number; })
+                    .value();
 
-            console.log("READ_PHONE_NUMBER: " + JSON.stringify(phoneNumbers));
-            finish(phoneNumbers);
-        };
+                console.log("READ_PHONE_NUMBER: " + JSON.stringify(phoneNumbers));
+                finish(phoneNumbers);
+            };
 
-        // Step 3: Get data -> go to filterData
-        var getSimInfo = _.bind(function() {
-            window.plugins.sim.getSimInfo(function(result) {
-                if (result.cards) filterData(result.cards);
-                else finishUnknown();
+            // Step 3: Get data -> go to filterData
+            var getSimInfo = _.bind(function() {
+                window.plugins.sim.getSimInfo(function(result) {
+                    if (result.cards) filterData(result.cards);
+                    else finishUnknown();
+                }, finishUnknown);
+            }, this);
+
+            // Step 2: Request read permission -> go to getSimInfo
+            var requestPermission = _.bind(function() {
+                window.plugins.sim.requestReadPermission(getSimInfo, finishUnknown);
+            }, this);
+
+            // Step 1: Check read permission -> go to getSimInfo or requestPermission
+            window.plugins.sim.hasReadPermission(function(hasPermission) {
+                if (hasPermission) getSimInfo();
+                else requestPermission();
             }, finishUnknown);
-        }, this);
-
-        // Step 2: Request read permission -> go to getSimInfo
-        var requestPermission = _.bind(function() {
-            window.plugins.sim.requestReadPermission(getSimInfo, finishUnknown);
-        }, this);
-
-        // Step 1: Check read permission -> go to getSimInfo or requestPermission
-        window.plugins.sim.hasReadPermission(function(hasPermission) {
-            if (hasPermission) getSimInfo();
-            else requestPermission();
-        }, finishUnknown);
+        } else {
+            finishUnknown();
+        }
     };
 
     return DevicePhoneNumbersWidget;
