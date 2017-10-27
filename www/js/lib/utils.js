@@ -402,7 +402,7 @@ define([
 
 		info.on("error", function(error) {
 			console.warn("Could not log error");
-			console.warn(error.attributes);
+			console.warn(JSON.stringify(error.attributes));
 		});
 
 		info.save();

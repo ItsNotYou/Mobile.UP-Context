@@ -309,6 +309,9 @@ define([
 		},
 
 		parse: function(response) {
+			if (!response || !response.studentCourses || !response.studentCourses.student) {
+				return [];
+			}
 			var student = response.studentCourses.student;
 
 			return _.map(this._asArray(student.actualCourses.course), function(course) {
