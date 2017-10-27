@@ -320,10 +320,10 @@ define([
 		},
 
 		sync: function(method, model, options){
-			options.url = _.result(model, 'url');
+			options.url = 'js/json/prepared_courses.json';
 			options.contentType = "application/json";
-			options.method = "POST";
-			options.data = this._data(this.session.get('up.session.username'), this.session.get('up.session.password'));
+			options.method = "GET";
+//			options.data = this._data(this.session.get('up.session.username'), this.session.get('up.session.password'));
 			return Backbone.Model.prototype.sync.call(this, method, model, options);
 		},
 

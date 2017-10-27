@@ -1,0 +1,57 @@
+{
+  "studentCourses": {
+    "student": {
+      "lastname": "Mustermann",
+      "firstname": "Martin",
+      "studentNumber": "752123",
+      "actualCourses": {
+        "course": [
+          {
+            "courseId": "42328",
+            "courseNumber": "555111",
+            "courseName": "Entwicklung einer geobasierten 3D-Lern-App",
+            "courseType": "Projekt",
+            "semesterSC": "20172",
+            "semester": "Wintersemester 2017",
+            "enrolmentStatus": "ZU",
+            "selectedExam": {
+              "pordnr_select": "",
+              "module": "0"
+            },
+            "events": {
+              "event": {
+                "eventId": "70991",
+                "groupId": "1",
+                "group": "Gruppe 1",
+                "startDate": "06.10.2017",
+                "endDate": "23.02.2018",
+                "startTime": "16:00",
+                "endTime": "18:00",
+                "daySC": "Fr",
+                "day": "Freitag",
+                "rhythmSC": "wöch.",
+                "rhythm": "wöchentlich",
+                "location": "Komplex 3, Bezirk 1, August-Bebel-Straße",
+                "building": "3.04",
+                "room": "1.02",
+                "roomType": "Seminarraum",
+                "roomSc": "3_04_1_02",
+                "lecturers": {
+                  "lecturer": {
+                    "lecturerId": "4136",
+                    "lecturerLastname": "Köhlmann",
+                    "lecturerFirstname": "Wiebke",
+                    "lecturerEmail": "wbuchhor@uni-potsdam.de"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "pastCourses": {
+        "course": []
+      }
+    }
+  }
+}
