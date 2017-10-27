@@ -21,9 +21,6 @@ define([
         return supported;
     })();
 
-    // TODO: reactivate local storage
-    supportLocalStorage = false;
-
     var getLocalValue = function(key) {
         if (supportLocalStorage) {
             values = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
