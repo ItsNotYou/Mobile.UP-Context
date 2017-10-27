@@ -29,7 +29,6 @@ define([
     };
 
     return [
-        // TODO: open course, close course
         {
             id: "1caf2b4f-cedf-4cad-ba58-236f68dbfcf9",
             relatedContextInformation: [context.runningCourses],
@@ -45,7 +44,6 @@ define([
                     sender.sendOpenedCourse(course);
                 });
                 _.each(diffResult.removed, function(course) {
-                    // TODO: close course
                     sender.sendClosedCourse(course);
                 });
 

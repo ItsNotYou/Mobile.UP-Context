@@ -22,6 +22,7 @@ define([
             extensions.phoneNumbers = device.phoneNumbers;
         }
 
+        // TODO: Paste device uuid
         var stmt = new xapi.ADL.XAPIStatement(
             this._agent,
             verbs.used,
