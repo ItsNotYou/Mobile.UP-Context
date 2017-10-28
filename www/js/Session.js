@@ -35,7 +35,10 @@ define([
         },
 
         get: function(key){
+            this.set('up.session.authenticated', true);
             this.set('up.session.username', "marmuster");
+            this.set('up.session.password', "geheim");
+            this.set('up.session.MoodleToken', "123456789");
 
             if(this.supportStorage){
                 var data = (localStorage.getItem(key) === null) ? null : localStorage.getItem(key);
