@@ -1,3 +1,5 @@
+***Archiving info:*** *This repository was created as part of my 2017 master thesis, 'The hybrid mobile application Mobile.UP as sensor node for a personal learning environment.' If you look for the official university app by the University of Potsdam, that's https://github.com/University-of-Potsdam-MM/Mobile.UP*
+
 Mobile.UP
 ======
 
